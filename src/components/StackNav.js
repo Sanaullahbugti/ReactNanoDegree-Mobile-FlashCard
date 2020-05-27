@@ -4,6 +4,7 @@ import TabNav from "./TabNav";
 import AddCard from "./AddCard";
 import Quiz from "./Quiz";
 import DeckView from "./DeckView";
+import DeckList from "./DeckList";
 const StackNav = createStackNavigator( {
     Home: {
         screen: TabNav,
@@ -27,7 +28,7 @@ const StackNav = createStackNavigator( {
         navigationOptions: ( { navigation } ) => ( {
             title: navigation.state.params.text
         } )
-    },
+    }
 
 } );
 export default createAppContainer( StackNav );

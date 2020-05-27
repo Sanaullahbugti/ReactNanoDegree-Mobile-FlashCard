@@ -4,7 +4,7 @@ import thunk from "redux-thunk";
 import logger from 'redux-logger'
 const rootReducer = combineReducers( { deckReducer } );
 function configureStore() {
-    return createStore( rootReducer, {}, applyMiddleware( thunk, logger ) )
+    return createStore( rootReducer, {}, applyMiddleware( thunk ) )
 }
 
 const store = configureStore();

@@ -4,6 +4,7 @@ import { getInitialData, initiateNotification } from '../../utils/data'
 import { Content, Card, CardItem, Body, Container, Header, Left, Title, Right } from 'native-base'
 import { connect } from 'react-redux'
 import DeckAction from '../store/actions/deckActions'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 class DeckList extends Component {
     state = {
         decks: {}
@@ -17,10 +18,7 @@ class DeckList extends Component {
             }
             )
         } )
-
-
     }
-
     render() {
         let { decks } = this.props
         return (
@@ -35,14 +33,15 @@ class DeckList extends Component {
                 <View style={{ flex: 1 }}>
                     {decks ? < ScrollView >
                         {
-                            Object.values( decks ).map( ( deck, i ) => <Card style={styles.container} key={i} >
+                            Object.values( decks ).map( ( deck, i ) => <TouchableOpacity onPress={() => this.props.navigation.navigate( "DeckView", { title: deck.title, cards: deck.questions.length } )} key={i}><Card style={styles.container}  >
                                 <CardItem header button >
-                                    <Text style={styles.text} onPress={() => this.props.navigation.navigate( "DeckView", { title: deck.title, cards: deck.questions.length } )}>{deck.title}</Text>
+                                    <Text style={styles.text} >{deck.title}</Text>
                                 </CardItem>
-                                <CardItem footer button onPress={() => alert( "This is Card Footer" )}>
+                                <CardItem  >
                                     <Text>  {deck.questions.length} Cards </Text>
                                 </CardItem>
                             </Card>
+                            </TouchableOpacity>
 
                             )
                         }

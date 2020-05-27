@@ -12,12 +12,12 @@ class Quiz extends Component {
     }
     isCorrect = ( correct ) => {
         const { title } = this.props.navigation.state.params
-        console.log(this.props.decks[title].questions.length)
-        console.log(correct)
+        console.log( this.props.decks[title].questions.length )
+        console.log( correct )
         this.setState( ( prevState ) => ( {
-            correct: correct=="Correct" ? ++prevState.correct : prevState.correct,
+            correct: correct == "Correct" ? ++prevState.correct : prevState.correct,
             completed: ++prevState.totalSwipped === this.props.decks[title].questions.length,
-           
+
         } ) )
     }
     switchToDeck = () => {
@@ -36,7 +36,7 @@ class Quiz extends Component {
         const { title } = this.props.navigation.state.params
         let questions = this.props.decks[title].questions
         const { completed, totalSwipped, correct } = this.state
-        console.log(this.state)
+        console.log( this.state )
         if ( completed ) {
             return <Card style={styles.card}>
                 <CardItem style={styles.cardItem} >
@@ -60,9 +60,17 @@ class Quiz extends Component {
                         ref={c => ( this._deckSwiper = c )}
                         dataSource={questions}
                         renderEmpty={() =>
-                            <View style={{ alignSelf: "center" }}>
-                                <Text>Over</Text>
-                            </View>
+                            <Card style={styles.card}>
+                                <CardItem style={styles.cardItem} >
+                                    <Text style={styles.question}>Your Deck has no Cards</Text>
+                                </CardItem>
+
+
+                                <Button full style={styles.btn} primary rounded onPress={() => this.props.navigation.navigate( 'DeckView' )}>
+                                    <Text style={styles.btnText}>Back</Text>
+                                </Button>
+
+                            </Card>
                         }
                         renderItem={item =>
                             <Card style={styles.card}>
@@ -73,10 +81,10 @@ class Quiz extends Component {
                                     <Text style={[styles.question, { color: "green" }]} onPress={() => alert( `Correct answer is :${ item.Answer }` )}>Show Answer</Text>
                                 </CardItem>
 
-                                <Button full style={styles.btn} success rounded onPress={()=>this.isCorrect("Correct")}>
+                                <Button full style={styles.btn} success rounded onPress={() => this.isCorrect( "Correct" )}>
                                     <Text>Correct</Text>
                                 </Button>
-                                <Button full style={styles.btn} danger rounded onPress={()=>this.isCorrect("False")}>
+                                <Button full style={styles.btn} danger rounded onPress={() => this.isCorrect( "False" )}>
                                     <Text>Incorrect</Text>
                                 </Button>
                             </Card>
@@ -111,7 +119,9 @@ let styles = StyleSheet.create( {
         marginTop: 10,
 
     },
-    btnText: { color: "white", fontSize: 18 }
+    btnText: {
+        color: "white", fontSize: 18
+    }
 
 } )
 const mapStateToProps = ( state ) => {

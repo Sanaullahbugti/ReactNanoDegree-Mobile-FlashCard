@@ -12,7 +12,7 @@ class AddCard extends Component {
         showToast: false
     }
     onSubmit = () => {
-        const { title } = this.props.navigation.state.params
+        const { title, cards } = this.props.navigation.state.params
         if ( this.state.question.trim() != "" && this.state.answer.trim() != "" ) {
             let card = {
                 "Question": this.state.question,
@@ -21,13 +21,13 @@ class AddCard extends Component {
             this.props.saveCard( { title, card } )
             saveCardToDeck( title, card ).then( res => console.log( res ) )
             this.setState( { question: "", answer: "" } )
-            this.props.navigation.navigate( 'Decks' )
+            this.props.navigation.navigate( 'DeckView', { cards: cards + 1 } )
         } else {
             Toast.show( {
                 text: "Please Fill all input fields",
                 buttonText: "Okay",
                 type: "danger",
-                duration:3000
+                duration: 3000
             } )
         }
     }
@@ -62,7 +62,6 @@ class AddCard extends Component {
             </Content>
         </Container></Root>
     }
-
 }
 const styles = StyleSheet.create( {
     card: {
@@ -96,9 +95,16 @@ const styles = StyleSheet.create( {
         marginLeft: "30%",
     }
 } )
+
 const mapDispatchToProps = ( dispatch ) => {
     return {
-        saveCard: ( data ) => dispatch( DeckAction.saveCard( data ) )
+        saveCard: ( data ) => dispatch( DeckAction.saveCard( data ) ),
+        getLength: ( title ) => dispatch( DeckAction.getQuestionLengthByTitle( title ) )
     }
 }
-export default connect( null, mapDispatchToProps )( AddCard )
+const mapStateToProps = ( state ) => {
+    return {
+        cards: state.deckReducer.questionForLength
+    }
+}
+export default connect( mapStateToProps, mapDispatchToProps )( AddCard )

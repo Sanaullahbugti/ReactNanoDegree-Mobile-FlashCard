@@ -6,9 +6,9 @@ import DeckAction from '../store/actions/deckActions'
 import { deleteDeck } from '../../utils/data'
 
 class DeckView extends Component {
-    onDelete = ()  => {
-        const {title} =this.props.navigation.state.params
-        deleteDeck( title ).then(rec=>console.log(rec))
+    onDelete = () => {
+        const { title } = this.props.navigation.state.params
+        deleteDeck( title ).then( rec => console.log( rec ) )
         this.props.removeDeck( title )
         this.props.navigation.navigate( "Home" )
     }
@@ -23,7 +23,7 @@ class DeckView extends Component {
                             <Text style={styles.title}>{title}</Text>
                             <Text style={styles.number} >{cards} Cards</Text>
                         </View>
-                        <Button primary rounded style={styles.btn} onPress={() => this.props.navigation.navigate( "AddCard", { title } )}><Text style={styles.txt}> Add Card </Text></Button>
+                        <Button primary rounded style={styles.btn} onPress={() => this.props.navigation.navigate( "AddCard", { title, cards } )}><Text style={styles.txt}> Add Card </Text></Button>
                         <Button primary rounded style={styles.btn} onPress={() => this.props.navigation.navigate( "Quiz", { title } )}><Text style={styles.txt}> Start Quiz </Text></Button>
                         <Button primary rounded style={styles.btn} onPress={this.onDelete} ><Text style={styles.txt}> Delete </Text></Button>
 

@@ -16,20 +16,20 @@ class NewDeck extends Component {
     };
     onSubmit = () => {
         let { text } = this.state
-        if(text.trim()!=""){
+        if ( text.trim() != "" ) {
             saveDeck( text ).then( res => console.log( text ) )
             this.props.saveDeck( { title: text } )
             this.setState( { text: "" } )
-            this.props.navigation.navigate( 'Decks' )
-        }else{
+            this.props.navigation.navigate( 'DeckView', { title: text, cards: 0 } )
+        } else {
             Toast.show( {
                 text: "Please Fill all input fields",
                 buttonText: "Okay",
                 type: "danger",
-                duration:3000
+                duration: 3000
             } )
         }
-        
+
 
     }
     render() {
@@ -48,7 +48,7 @@ class NewDeck extends Component {
                             <Item rounded style={styles.textFielld} >
                                 <Input placeholder='Deck Title' onChange={this.handleChange} value={this.state.text} />
                             </Item>
-                            <Button primary rounded style={styles.btn} onPress={this.onSubmit}><Text style={styles.txt}> Submit </Text></Button>
+                            <Button primary rounded style={styles.btn} onPress={this.onSubmit}><Text style={styles.txt}> Create Deck </Text></Button>
                         </Card>
                     </Content>
 

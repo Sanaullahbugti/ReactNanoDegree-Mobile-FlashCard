@@ -2,7 +2,7 @@
 import DeckAction from "../actions/deckActions";
 import { ActionSheet } from "native-base";
 
-function deckReducer( state = { decks: null }, action ) {
+function deckReducer( state = { decks: null, questionForLength: 0 }, action ) {
 
     switch ( action.type ) {
 
@@ -38,6 +38,11 @@ function deckReducer( state = { decks: null }, action ) {
             delete state.decks[action.title]
             return {
                 ...state
+            }
+        case DeckAction.GET_DECK_QUESTIONS:
+            return {
+                ...state,
+                questionForLength: state.decks != null ? state.decks[action.title].questions.length : 0
             }
         default:
             return state
